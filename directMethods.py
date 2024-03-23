@@ -94,9 +94,13 @@ A = np.array([
   [-2,3,1]
 ], dtype=float)
 
-print(A)
-b = np.array([8,8,7], dtype=float)
+# print(A)
+# b = np.array([8,8,7], dtype=float)
 
-print(gauss_elimination(A, b))
+# print(gauss_elimination(A, b))
 # print(regressive_substitution(A, b))
+
+A = np.array([[100,200,300], [0,20,10], [0,0,20]])
+b = np.array([20,40,60])
+print(regressive_substitution(A,b))
 
