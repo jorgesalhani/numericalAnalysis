@@ -89,18 +89,20 @@ def gauss_elimination(A, b):
   return {'A': A, 'b': b}
 
 A = np.array([
-  [0,1,2],
-  [1,-1,3],
-  [-2,3,1]
+  [10, 5, 2],
+  [5, 3, 2],
+  [2, 2, 3]
 ], dtype=float)
 
-# print(A)
-# b = np.array([8,8,7], dtype=float)
+print(np.linalg.cholesky(A))
 
-# print(gauss_elimination(A, b))
-# print(regressive_substitution(A, b))
+# # print(A)
+# # b = np.array([8,8,7], dtype=float)
 
-A = np.array([[100,200,300], [0,20,10], [0,0,20]])
-b = np.array([20,40,60])
-print(regressive_substitution(A,b))
+# # print(gauss_elimination(A, b))
+# # print(regressive_substitution(A, b))
+
+# A = np.array([[100,200,300], [0,20,10], [0,0,20]])
+# b = np.array([20,40,60])
+# print(regressive_substitution(A,b))
 
