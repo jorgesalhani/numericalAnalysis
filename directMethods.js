@@ -74,6 +74,35 @@ function decomposition_cholesky(A) {
   return H
 }
 
+function decomposition_LU(A) {
+  const N = A.length
+
+  const L = [...Array(N)].map(() => Array(N).fill(0))
+  const U = [...Array(N)].map(() => Array(N).fill(0))
+
+  L.map((_, i) => L[i][i] = 1)
+  A.map((row, i, M) => row.map((v, j) => {
+
+    if (i <= j) {
+      const sumTerm = row.reduce((s, _, k) => k < i ? s + L[i][k]*U[k][j] : s, 0)
+      const u_ij = A[i][j] - sumTerm
+      U[i][j] = u_ij
+      return U[i][j]
+    }
+
+    if (i > j) {
+      const sumTerm = row.reduce((s, _, k) => k < j ? L[i][k]*U[k][j] : s, 0)
+      const l_ij = (A[i][j] - sumTerm) / U[j][j]
+      L[i][j] = l_ij
+      return L[i][j]
+    }
+  }))
+
+  return {L, U}
+}
+
+
+
 // const L = mathjs.matrix([[1,0,0],[10,20,0],[100,200,300]])
 // const U = mathjs.matrix([[100,200,300], [0,20,10], [0,0,20]])
 
@@ -98,6 +127,8 @@ const U = [
 ]
 const b = [10, 20, 4]
 
-console.log(progressive_substitution(L, b))
-console.log(regressive_substitution(U, b))
-console.log(decomposition_cholesky(A))
+// console.log(progressive_substitution(L, b))
+// console.log(regressive_substitution(U, b))
+// console.log(decomposition_cholesky(A))
+// console.log(decomposition_LU(A))
+
