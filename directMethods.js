@@ -1,3 +1,11 @@
+function transpose(A) {
+  return A.map((row,i) => row.map((_,j) => A[j][i]));
+}
+
+function matmul(A,B) {
+  const BT = transpose(B)
+  return A.map((row, i) => row.map((_, j) => row.reduce((s, _, k) => s + A[i][k]*BT[j][k], 0)))
+}
 
 function progressive_substitution(L, b) {
   const N = L.length
@@ -101,6 +109,21 @@ function decomposition_LU(A) {
   return {L, U}
 }
 
+function gauss_elimination_matrix(A) {
+
+  const N = A.length
+
+  A.map((row, i) => row.map((_, j) => {
+    const k = j + i + 1
+    if (k >= N) return
+
+    const m_ij = - A[k][i] / A[i][i]
+    row.map((_, l) => A[k][l] = A[k][l] + (m_ij * A[i][l]))
+
+  }))
+  return A
+}
+
 
 
 // const L = mathjs.matrix([[1,0,0],[10,20,0],[100,200,300]])
@@ -109,9 +132,9 @@ function decomposition_LU(A) {
 // const x = progressive_substitution(L, b)
 // const x = regressive_substitution(U, b)
 const A = [
-  [10, 5, 2],
-  [5, 3, 2],
-  [2, 2, 3],
+  [2, 1, 2],
+  [4, 3, 3],
+  [6, 5, -1],
 ]
 
 const L = [
@@ -131,4 +154,5 @@ const b = [10, 20, 4]
 // console.log(regressive_substitution(U, b))
 // console.log(decomposition_cholesky(A))
 // console.log(decomposition_LU(A))
+console.log(gauss_elimination_matrix(A, b))
 
