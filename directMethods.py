@@ -96,3 +96,19 @@ class DirectMethods:
         b[i] = b[i] + m_ij * b[j]
 
     return {'A': A, 'b': b}
+  
+  def inverse(A):
+    n = len(A)
+    I = np.eye(n)
+
+    v = []
+
+    LU = DirectMethods.decomposition_lu(A)
+
+    for e in I:
+      y = DirectMethods.progressive_substituition(LU['L'], e)
+      x = DirectMethods.regressive_substitution(LU['U'], y)
+
+      v.append(x)
+
+    return np.array(v).transpose()

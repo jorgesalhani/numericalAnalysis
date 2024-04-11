@@ -212,15 +212,7 @@ X =
 
 """
 
-""" Questão 3 - a)
-
-
-"""
-
-""" Solução - a)
-
-
-"""
+""" Questão 3 - a) TODO
 
 A = np.array([
   [0,0,2,1,2],
@@ -234,7 +226,12 @@ b = np.array([1,1,-4,-2,-1])
 
 Ab = DirectMethods.gauss_elimination(A, b)
 x = DirectMethods.regressive_substitution(Ab['A'], Ab['b'])
-print(x)
-print(np.matmul(A, x.transpose()))
+print(Ab['A'], Ab['b'])
+# print(np.matmul(A, x.transpose()))
 
+"""
+
+""" Solução - a) TODO
+
+"""
 
