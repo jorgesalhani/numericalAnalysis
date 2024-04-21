@@ -24,10 +24,24 @@ class FuncZeros:
     while k < self.MAX_ITERATION:
       dx = func(x) / dfunc(x)
       x -= dx
-      print(x)
       if abs(dx) < self.epsilon:
         return x
       
+    return None
+  
+  def newton_jacobian(self, funcs, jacobian, x0):
+    k = 0
+    x = x0
+    while k < self.MAX_ITERATION:
+      calc_jac = jacobian(*list(x0))
+      calc_funcs = funcs(*list(x0))
+
+      jacInv = np.linalg.inv(calc_jac)
+      v = np.matmul(jacInv, calc_funcs)
+      x -= v
+      k += 1
+      if np.linalg.norm(v) < self.epsilon:
+        return x
     return None
 
 

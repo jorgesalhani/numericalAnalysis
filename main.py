@@ -391,3 +391,30 @@ x =
 # x0 = 5.5
 # fz.epsilon = 1e-7
 # print(fz.newton(func, dfunc, x0))
+
+fz = FuncZeros(max_it=5, epsilon=0.001)
+
+f1 = lambda x1, x2 : x1**2 - 2*x1 - x2 + 1
+f2 = lambda x1, x2 : x1**2 + x2**2 - 1
+
+funcs = lambda x1, x2 : np.array([
+  f1(x1, x2), f2(x1, x2)
+])
+
+j11 = lambda x1 : 2*x1 - 2
+j12 = -1
+j21 = lambda x1 : 2*x1
+j22 = lambda x2 : 2*x2
+
+jacobian = lambda x1, x2 : np.array([
+  [j11(x1), j12],
+  [j21(x1), j22(x2)]
+])
+
+x0 = np.array([0.5, 0])
+x1 = fz.newton_jacobian(funcs, jacobian, x0)
+print(x1)
+
+x0 = np.array([0, 0.5])
+x2 = fz.newton_jacobian(funcs, jacobian, x0)
+print(x2)
