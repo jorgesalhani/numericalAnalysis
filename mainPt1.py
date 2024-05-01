@@ -382,15 +382,15 @@ x =
 
 
 
-# fz = FuncZeros()
-# # func = lambda x : x**3 - 30*(x**2) + 2552
-# # print(fz.bissection(func, -10, 0))
+fz = FuncZeros()
+# func = lambda x : x**3 - 30*(x**2) + 2552
+# print(fz.bissection(func, -10, 0))
 
-# func = lambda x : x**2 + x - 6
-# dfunc = lambda x : 2*x + 1
-# x0 = 5.5
-# fz.epsilon = 1e-7
-# print(fz.newton(func, dfunc, x0))
+func = lambda x : x**2 + x - 6
+dfunc = lambda x : 2*x + 1
+x0 = 5.5
+fz.epsilon = 1e-7
+print(fz.newton(func, dfunc, x0))
 
 fz = FuncZeros(max_it=5, epsilon=0.001)
 
@@ -418,3 +418,5 @@ print(x1)
 x0 = np.array([0, 0.5])
 x2 = fz.newton_jacobian(funcs, jacobian, x0)
 print(x2)
+
+
