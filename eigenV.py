@@ -2,6 +2,11 @@ import numpy as np
 import itertools as itt
 
 class EigenV:
+  def __init__(self, max_it = 10000, tol = 0.001) -> None:
+    self.tol = tol
+    self.max_it = max_it
+
+  @staticmethod
   def decomposition_QR_classic(A):
     m,n = [len(A), len(A[0])]
 
@@ -20,6 +25,10 @@ class EigenV:
 
     return {'Q': Q, 'R': R}
 
+  """
+  @TODO corrigir
+  """
+  @staticmethod
   def decomposition_QR_modified(A):
     m,n = [len(A), len(A[0])]
 
@@ -37,5 +46,18 @@ class EigenV:
 
     return {'Q': Q, 'R': R}
 
-  def francis():
-    pass
+  def francis(self, A):
+    n = len(A)
+    V = np.eye(n)
+    erro = np.infty
+
+    k = 0
+    while erro > self.tol and self.max_it >= k :
+      Q,R = np.linalg.qr(A)
+      A = np.matmul(R, Q)
+      V = np.matmul(V, Q)
+
+      erro = np.sqrt(abs(np.linalg.norm(A, ord='fro')**2 - np.sum(np.diag(A)**2)))
+      k += 1
+
+    return {'V': V, 'D': np.diag(A)}

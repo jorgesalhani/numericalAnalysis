@@ -1,5 +1,4 @@
 import numpy as np
-
 class IterativeMethods:
   def __init__(self, max_it = 5000, epsilon = 0.001, printCG = False, forceReturnResult = False) -> None:
     self.MAX_ITERATION = max_it
@@ -9,6 +8,11 @@ class IterativeMethods:
 
   @staticmethod
   def test_convergency_gauss_jacobi(A):
+    """ Testar convergência de solução iterativa via algoritmo de Gauss-Jacobi
+
+    A : ndarray
+      2D array com tipos float
+    """
     if 0 in np.diag(A): return False
 
     n = len(A)
@@ -29,6 +33,11 @@ class IterativeMethods:
   
   @staticmethod
   def test_convergency_gauss_seidel(A):
+    """ Testar convergência de solução iterativa via algoritmo de Gauss-Seidel
+
+    A : ndarray
+      2D array com tipos float
+    """
     if 0 in np.diag(A): return False
 
     n = len(A)
@@ -37,12 +46,16 @@ class IterativeMethods:
     for k in range(1, n):
       beta_k = (np.sum(abs(A[k,:k]) * beta[k-1]) + np.sum(abs(A[k,k+1:]))) / abs(A[k,k])
       beta.append(beta_k)
-    print(beta)
     
     if max(beta) < 1: return True
     return False
 
   def solve_gauss_jacobi(self, A, b, x0):
+    """ Obter vetor de solução x tal que Ax = b via algoritmo de Gauss-Jacobi
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
     Dinv = np.diagflat([1/A[i,i] for i in range(n)])
     I = np.eye(n)
@@ -73,6 +86,11 @@ class IterativeMethods:
     return x0
 
   def solve_gauss_seidel(self, A, b, x0):
+    """ Obter vetor de solução x tal que Ax = b via algoritmo de Gauss-Seidel
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
     L = np.tril(A)
     U = np.triu(A,1)
@@ -104,6 +122,11 @@ class IterativeMethods:
     return x0
   
   def solve_gradientes(self, A, b, x0):
+    """ Obter vetor de solução x tal que Ax = b via algoritmo de gradientes
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
     r = b - np.matmul(A, x0)
     norm = np.linalg.norm(r)

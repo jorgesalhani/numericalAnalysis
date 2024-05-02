@@ -1,9 +1,20 @@
 import numpy as np
 import itertools as itt
+"""
+Classe DirectMethods
 
+Solução de sistemas lineares via métodos diretos
+"""
 class DirectMethods:
 
   def progressive_substituition(L, b):
+    """ Obter o vetor x tal que torne verdadeira a equação Lx = b
+
+    L : ndarray
+      matriz triangular inferior 2D com tipos float
+    b : ndarray
+      vetor de resultado 1D com tipos float
+    """
     n = len(L)
 
     x = []
@@ -19,6 +30,13 @@ class DirectMethods:
     return np.array(x)
 
   def regressive_substitution(U, b):
+    """ Obter o vetor x tal que torne verdadeira a equação Ux = b
+
+    U : ndarray
+      matriz triangular superior 2D com tipos float
+    b : ndarray
+      vetor de resultado 1D com tipos float
+    """
     n = len(U)
 
     x = [0]*n
@@ -33,8 +51,12 @@ class DirectMethods:
 
     return np.array(x)
 
-  # TODO: com erro
   def decomposition_lu(A):
+    """ Obter o vetor decomposição LU da matriz A tal que A = LU
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
 
     L = np.identity(n)
@@ -54,6 +76,11 @@ class DirectMethods:
     return {'L': L, 'U': U}
 
   def decomposition_cholesky(A):
+    """ Obter o vetor decomposição H da matriz A tal que A = H(H^T) via Cholesky
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
     H = np.zeros((n,n))
 
@@ -71,6 +98,13 @@ class DirectMethods:
     return H
 
   def gauss_elimination(A, b):
+    """ Obter a matriz triangular superior de A via eliminação de Gauss
+
+    A : ndarray
+      2D array com tipos float
+    b : ndarray
+      vetor de resultado 1D com tipos float
+    """
     n = len(A)
 
     for j in range(n):
@@ -98,6 +132,11 @@ class DirectMethods:
     return {'A': A, 'b': b}
   
   def inverse(A):
+    """ Obter a matriz inversa de A (A^(-1))
+
+    A : ndarray
+      2D array com tipos float
+    """
     n = len(A)
     I = np.eye(n)
 
