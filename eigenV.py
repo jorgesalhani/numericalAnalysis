@@ -2,24 +2,40 @@ import numpy as np
 import itertools as itt
 
 class EigenV:
-  def ortogonal_GS(A):
-    n = len(A)
-    V = np.copy(A)
-    Q = np.copy(A)
+  def decomposition_QR_classic(A):
+    m,n = [len(A), len(A[0])]
+
+    Q = np.zeros((m,n))
+    R = np.zeros((n,n))
+
     for j in range(n):
-      Q[:,j] = V[:,j] / np.linalg.norm(V[:,j])
-    
-      proj_qa = [(np.dot(Q[:,i], A[:,i]) / np.linalg.norm(V[:,j])) * Q[:,i]  for i in range(j)]
-      sumTerm = np.sum(proj_qa)
-      V[:,j] = A[:,j] - sumTerm
-    
-    return {'V': V, 'Q':Q}
+      V = A[:,j]
+      
+      for i in range(j):
+        R[i,j] = np.dot(Q[:,i].transpose(), A[:,j])
+        V = V - R[i,j] * Q[:, i]
 
-  def decomposition_QR_classic():
-    pass
+      R[j,j] = np.linalg.norm(V)
+      Q[:,j] = V / R[j,j]
 
-  def decomposition_QR_modified():
-    pass
+    return {'Q': Q, 'R': R}
+
+  def decomposition_QR_modified(A):
+    m,n = [len(A), len(A[0])]
+
+    V = np.copy(A)
+    Q = np.zeros((m,n))
+    R = np.zeros((n,n))
+
+    for j in range(n):
+      R[j,j] = np.linalg.norm(V[:,j])
+      Q[:,j] = V[:,j] / R[j,j]
+      
+      for i in range(j):
+        R[i,j] = np.dot(Q[:,i].transpose(), A[:,j])
+        V[:,j] -= R[i,j] * Q[:, i]
+
+    return {'Q': Q, 'R': R}
 
   def francis():
     pass
