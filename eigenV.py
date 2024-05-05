@@ -25,9 +25,6 @@ class EigenV:
 
     return {'Q': Q, 'R': R}
 
-  """
-  @TODO corrigir
-  """
   @staticmethod
   def decomposition_QR_modified(A):
     m,n = [len(A), len(A[0])]
@@ -56,9 +53,32 @@ class EigenV:
       QR = self.decomposition_QR_modified(A)
       A = np.matmul(QR['R'], QR['Q'])
       V = np.matmul(V, QR['Q'])
-      
+
       erro = np.sqrt(abs(np.linalg.norm(A, ord='fro')**2 - np.sum(np.diag(A)**2)))
       # erro = max(np.diag(A - np.diag(A)))
       k += 1
 
     return {'V': V, 'D': np.diag(A)}
+  
+  def power_method(self, A):
+    n = len(A)
+    y0 = np.zeros(n)
+    y0[0] = 1
+    
+    erro = np.infty
+    y = y0
+
+    k = 0
+    while erro > self.tol and self.max_it >= k:
+      x = np.matmul(A, y0)
+      y = x / np.linalg.norm(x)
+      erro = abs(abs(np.matmul(y0, y) - 1))
+      y0 = y
+      k += 1
+
+    lmbd = np.matmul(np.matmul(y.transpose(), A), y)
+    return {'lambda': lmbd, 'y': y, 'k': k}
+
+
+
+

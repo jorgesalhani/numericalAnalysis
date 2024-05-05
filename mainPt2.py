@@ -27,12 +27,13 @@ from eigenV import EigenV
 # print(np.matmul(QR[0], QR[1]))
 
 A = np.array([
-  [5,4],
-  [4,5]
+  [5.2,4],
+  [4,5.3]
 ], dtype=float)
 
 eigen = EigenV()
-VD = eigen.francis(A)
-print(VD['V'])
-print(VD['D'])
+# VD = eigen.francis(A)
+# print(VD['V'])
+# print(VD['D'])
+print(eigen.power_method(A))
 print(np.linalg.eig(A))
