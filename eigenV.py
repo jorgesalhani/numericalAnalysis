@@ -41,8 +41,8 @@ class EigenV:
       Q[:,j] = V[:,j] / R[j,j]
       
       for i in range(j, n):
-        R[i,j] = np.dot(Q[:,i].transpose(), V[:,j])
-        V[:,j] -= R[i,j] * Q[:, i]
+        R[j,i] = np.dot(Q[:,j], V[:,i])
+        V[:,i] = V[:,i] - R[j,i] * Q[:,j]
 
     return {'Q': Q, 'R': R}
 
@@ -54,11 +54,11 @@ class EigenV:
     k = 0
     while erro > self.tol and self.max_it >= k :
       QR = self.decomposition_QR_modified(A)
-      print(QR)
       A = np.matmul(QR['R'], QR['Q'])
       V = np.matmul(V, QR['Q'])
-
+      
       erro = np.sqrt(abs(np.linalg.norm(A, ord='fro')**2 - np.sum(np.diag(A)**2)))
+      # erro = max(np.diag(A - np.diag(A)))
       k += 1
 
     return {'V': V, 'D': np.diag(A)}
