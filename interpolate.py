@@ -2,7 +2,7 @@ import numpy as np
 
 class Interpolate:
   @staticmethod
-  def lagrange(x, y_i, x_i):
+  def lagrange(x, x_i, y_i):
     n = len(y_i)
     L = []
 
@@ -39,3 +39,18 @@ class Interpolate:
     cheb_xi = lambda i : ((a+b)/2) + ((b-a)/2) * np.cos(theta(i))
 
     return [cheb_xi(i) for i in range(1,n)]
+  
+  @staticmethod
+  def linear_spline(x, x_i, y_i):
+    n = len(x_i)
+
+    m_i = lambda i : ((x_i[i+1] - x) / (x_i[i+1] - x_i[i]))
+    m_inext = lambda i : ((x - x_i[i]) / (x_i[i+1] - x_i[i]))
+    
+    s_i = lambda i : y_i[i] * m_i(i) + y_i[i+1] * m_inext(i)
+
+    first_max_i = [i for i in range(1,n) if x_i[i-1] <= x]
+    if len(first_max_i) == 0: return 0
+
+    return s_i(first_max_i[-1]-1)
+
