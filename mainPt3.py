@@ -3,14 +3,16 @@ from interpolate import Interpolate
 import matplotlib.pyplot as plt
 
 x_i = [-2, 0, 3, 5]
-y_i = [3, -2, 4, 2]
+y_i = [3, -2, 4, 10]
 
 dx = 1 
 n = 10
 xs = np.arange(-2.6,5.6,0.1)
 
 
-L = [Interpolate.lagrange(x, y_i, x_i) for x in xs]
+# L = [Interpolate.lagrange(x, y_i, x_i) for x in xs]
+
+L = [Interpolate.newton(x, x_i, y_i) for x in xs]
 
 fig, ax = plt.subplots(1,1, figsize=(6,10))
 
@@ -24,4 +26,3 @@ ax.set_ylabel('Y', {'size': 15})
 ax.legend(title='Método', title_fontsize=13)
 
 plt.show()
-

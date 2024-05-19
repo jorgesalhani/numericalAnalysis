@@ -14,5 +14,20 @@ class Interpolate:
 
     return np.sum(L)
 
-  def newton():
-    pass
+  @staticmethod
+  def newton(x, x_i, y_i):
+    n = len(x_i)
+
+    D = np.zeros((n, n))
+    D[:, 0] = y_i
+
+    for j in range(1,n):
+      for i in range(n-j):
+        divided_diff = lambda i,j : (D[i+1, j-1] - D[i,j-1]) / (x_i[i+j] - x_i[i])
+
+        D[i,j] = divided_diff(i,j)
+
+    p_ki = lambda x, ord_i : np.prod([(x - x_i[i]) for i in range(ord_i)])
+    P_k = [D[0,i] * p_ki(x, i) for i in range(n)]
+
+    return np.sum(P_k)
