@@ -31,3 +31,11 @@ class Interpolate:
     P_k = [D[0,i] * p_ki(x, i) for i in range(n)]
 
     return np.sum(P_k)
+  
+  @staticmethod
+  def chebychev_nodes(a, b, n):
+
+    theta = lambda i : ((2*i - 1) / (2*(n+1))) * np.pi
+    cheb_xi = lambda i : ((a+b)/2) + ((b-a)/2) * np.cos(theta(i))
+
+    return [cheb_xi(i) for i in range(1,n)]
